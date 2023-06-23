@@ -1,16 +1,10 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/java
 {
-	"name": "Java",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/java:0-17",
+	"name": "FPinScala",
+	"build": { "dockerfile": "Dockerfile" },
 
 	"features": {
-		"ghcr.io/devcontainers/features/java:1": {
-			"version": "none",
-			"installMaven": "true",
-			"installGradle": "true"
-		},
 		"ghcr.io/devcontainers/features/common-utils:2": {}
 	}
 
@@ -18,7 +12,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "java -version",
+	// "postCreateCommand": "scala-cli repl --repl-dry-run"
 
 	// Configure tool-specific properties.
 	// "customizations": {},
