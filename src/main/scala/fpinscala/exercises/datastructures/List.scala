@@ -37,9 +37,15 @@ object List: // `List` companion object. Contains functions for creating and wor
       case Cons(h,t) => Cons(h, append(t, a2))
 
   def foldRight[A,B](as: List[A], acc: B, f: (A, B) => B): B = // Utility functions
+    foldRightOriginal(as, acc, f)
+
+  def foldRightOriginal[A,B](as: List[A], acc: B, f: (A, B) => B): B =
     as match
       case Nil => acc
       case Cons(x, xs) => f(x, foldRight(xs, acc, f))
+
+  def foldRightViaFoldLeft[A, B](as: List[A], acc: B, f: (A, B) => B): B =
+    foldLeft(reverse(as), acc, (b, a) => f(a, b))
 
   def sumViaFoldRight(ns: List[Int]): Int =
     foldRight(ns, 0, (x,y) => x + y)
@@ -82,15 +88,7 @@ object List: // `List` companion object. Contains functions for creating and wor
     case _ => reverse(drop(reverse(l), 1))
   }
 
-  def length[A](l: List[A]): Int = {
-    @annotation.tailrec
-    def loop(l: List[A], acc: Int): Int = l match {
-      case Nil => acc
-      case Cons(_, t) => loop(t, acc + 1)
-    }
-
-    loop(l, 0)
-  }
+  def length[A](l: List[A]): Int = foldRight(l, 1, (_, counter) => counter + 1)
 
   def foldLeft[A,B](l: List[A], acc: B, f: (B, A) => B): B = {
     @annotation.tailrec
