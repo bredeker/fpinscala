@@ -88,7 +88,7 @@ object List: // `List` companion object. Contains functions for creating and wor
     case _ => reverse(drop(reverse(l), 1))
   }
 
-  def length[A](l: List[A]): Int = foldRight(l, 1, (_, counter) => counter + 1)
+  def length[A](l: List[A]): Int = foldRight(l, 0, (_, counter) => counter + 1)
 
   def foldLeft[A,B](l: List[A], acc: B, f: (B, A) => B): B = {
     @annotation.tailrec
