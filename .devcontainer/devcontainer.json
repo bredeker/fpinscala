@@ -12,7 +12,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "scala-cli repl --repl-dry-run"
+	// "postCreateCommand": "cs launch scala-cli -- clean"
 
 	// Configure tool-specific properties.
 	// "customizations": {},
