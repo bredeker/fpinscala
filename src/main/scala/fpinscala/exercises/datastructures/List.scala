@@ -111,7 +111,7 @@ object List: // `List` companion object. Contains functions for creating and wor
   def appendViaFoldRight[A](l: List[A], r: List[A]): List[A] = foldRight(l, r, (a, as) => Cons(a, as))
 
   def concat[A](l: List[List[A]]): List[A] =
-    foldRight[List[A], List[A]](l, Nil, (as, acc) => appendViaFoldRight(as, acc))
+    foldRight[List[A], List[A]](l, Nil, appendViaFoldRight)
 
   def incrementEach(l: List[Int]): List[Int] =
     foldRight[Int, List[Int]](l, Nil, (i, is) => Cons(i + 1, is))
@@ -141,5 +141,30 @@ object List: // `List` companion object. Contains functions for creating and wor
   }
 
   // def zipWith - TODO determine signature
+  def zipWith[A, B, C](a: List[A], b: List[B], f: (A, B) => C): List[C] = {
+    @annotation.tailrec
+    def loop(as: List[A], bs: List[B], acc: List[C]): List[C] = (as, bs) match {
+      case (Cons(a, at), Cons(b, bt)) => loop(at, bt, Cons(f(a, b), acc))
+      case _ => acc
+    }
 
-  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = ???
+    reverse(loop(a, b, Nil))
+  }
+
+  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
+    @annotation.tailrec
+    def startsWith(l1: List[A], l2: List[A]): Boolean = (l1, l2) match {
+      case (Cons(h1, t1), Cons(h2, t2)) if h1 == h2 => startsWith(t1, t2)
+      case (_, Nil) => true
+      case _ => false // l1 was Nil before l2, or neither was Nil but heads didn't match
+    }
+
+    @annotation.tailrec
+    def loop(l1: List[A]): Boolean = l1 match {
+      case Cons(_, Nil) => startsWith(l1, sub)
+      case Cons(h, t) => startsWith(l1, sub) || loop(t)
+      case _ => l1 == sub // Basically, return true iff both are Nil
+    }
+
+    loop(sup)
+  }
