@@ -4,6 +4,15 @@
 	"name": "FPinScala",
 	"build": { "dockerfile": "Dockerfile" },
 
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"scala-lang.scala",
+				"scalameta.metals"
+			]
+		}
+	  },
+
 	"features": {
 		"ghcr.io/devcontainers/features/common-utils:2": {}
 	}
